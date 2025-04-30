@@ -1,0 +1,7 @@
+{
+  "appointment_invalid_time": "The appointment date should be in the future",
+  
+  "donor_not_found": "No donor with the given id was found",
+
+  "transfusion_center_not_found": "No transfusion center with the given id was found"
+}
