@@ -8,6 +8,7 @@ import org.springframework.core.io.Resource;
 import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.view.json.MappingJackson2JsonView;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -40,7 +41,7 @@ public class ExceptionHandler extends DefaultErrorAttributes {
             return null;
         }
 
-        ModelAndView modelAndView = super.resolveException(request, response, handler, ex);
+        super.resolveException(request, response, handler, ex);
         String userLanguage = request.getLocale().getLanguage();
         String errorKey = appException.getBody().getDetail();
         String translatedErrorMessage = translations.getOrDefault(userLanguage, translations.get("en")).get(errorKey);
@@ -50,8 +51,9 @@ public class ExceptionHandler extends DefaultErrorAttributes {
                 translatedErrorMessage = translatedErrorMessage.replace("{" + entry.getKey() + "}", entry.getValue().toString());
             }
         }
-        modelAndView.getModel().put("errorMessage", translatedErrorMessage);
         
-        return modelAndView;
+        response.setStatus(appException.getStatusCode().value());
+        
+        return new ModelAndView(new MappingJackson2JsonView(), Map.of("error", translatedErrorMessage));
     }
 }

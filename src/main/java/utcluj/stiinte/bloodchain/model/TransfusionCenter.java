@@ -13,8 +13,9 @@ public class TransfusionCenter {
     private long id;
     
     @Column(nullable = false, length = 100)
-    String name;
+    private String name;
     
     @ManyToOne
-    private City city;
+    @JoinColumn(name = "address_id")
+    private Address address;
 }

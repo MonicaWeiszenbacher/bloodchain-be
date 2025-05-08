@@ -3,6 +3,7 @@ package utcluj.stiinte.bloodchain.model;
 import jakarta.persistence.*;
 import lombok.Data;
 import utcluj.stiinte.bloodchain.model.enums.BloodGroup;
+import utcluj.stiinte.bloodchain.model.enums.Gender;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -24,10 +25,14 @@ public class Donor {
     
     private float weight;
     
+    @Enumerated(EnumType.STRING)
     private BloodGroup bloodGroup;
-
-    @ManyToOne
-    private City city;
+    
+    @Enumerated(EnumType.STRING)
+    private Gender gender;
+    
+    @OneToOne
+    private Address address;
     
     @OneToMany
     private List<Appointment> appointments;

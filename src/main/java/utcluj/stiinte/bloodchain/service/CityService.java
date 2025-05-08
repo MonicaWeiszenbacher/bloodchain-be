@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import org.apache.commons.csv.CSVFormat;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import utcluj.stiinte.bloodchain.model.City;
 import utcluj.stiinte.bloodchain.repository.CityRepository;
 
@@ -19,6 +20,7 @@ public class CityService {
     
     private final CityRepository cityRepository;
     
+    @Transactional
     public void saveCities() throws IOException {
         if (cityRepository.count() > 0) {
             return;

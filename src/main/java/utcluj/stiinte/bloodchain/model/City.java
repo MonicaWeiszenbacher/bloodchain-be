@@ -8,8 +8,8 @@ import lombok.Data;
 public class City {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "appt_seq")
-    @SequenceGenerator(name = "appt_seq", sequenceName = "appointment_sequence", allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "city_seq")
+    @SequenceGenerator(name = "city_seq", sequenceName = "city_sequence", allocationSize = 1)
     private long id;
     
     private String name;

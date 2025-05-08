@@ -1,7 +1,9 @@
 package utcluj.stiinte.bloodchain.model;
 
 import jakarta.persistence.*;
+import lombok.Builder;
 import lombok.Data;
+import utcluj.stiinte.bloodchain.model.enums.AppointmentStatus;
 
 import java.time.OffsetDateTime;
 
@@ -21,4 +23,7 @@ public class Appointment {
     private TransfusionCenter transfusionCenter;
     
     private OffsetDateTime time;
+    
+    @Enumerated(EnumType.STRING)
+    private AppointmentStatus status = AppointmentStatus.SCHEDULED;
 }

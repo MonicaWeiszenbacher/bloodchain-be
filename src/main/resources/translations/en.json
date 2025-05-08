@@ -1,5 +1,6 @@
 {
   "appointment_invalid_time": "The appointment date should be in the future",
+  "appointment_not_found": "No appointment with the given id was found",
   
   "donor_not_found": "No donor with the given id was found",
 
