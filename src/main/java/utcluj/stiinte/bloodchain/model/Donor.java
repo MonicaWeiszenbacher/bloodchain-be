@@ -36,4 +36,6 @@ public class Donor {
     
     @OneToMany
     private List<Appointment> appointments;
+    
+    private LocalDate lastDonationDate;
 }

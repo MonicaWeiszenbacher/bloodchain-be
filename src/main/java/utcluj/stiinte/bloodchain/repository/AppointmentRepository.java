@@ -10,7 +10,7 @@ import java.util.List;
 @Repository
 public interface AppointmentRepository extends CrudRepository<Appointment, Long> {
     
-    List<Appointment> findAllByTransfusionCenterId(long id);
+    List<Appointment> findAllByTransfusionCenterIdAndStatusOrderByTimeDesc(long id, AppointmentStatus status);
     
     List<Appointment> findAllByDonorIdAndStatusOrderByTimeDesc(long id, AppointmentStatus status);
 }

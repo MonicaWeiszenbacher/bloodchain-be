@@ -5,7 +5,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import utcluj.stiinte.bloodchain.data.appointment.AppointmentRequest;
-import utcluj.stiinte.bloodchain.data.appointment.DonationHistory;
+import utcluj.stiinte.bloodchain.data.appointment.DonorAppointmentData;
+import utcluj.stiinte.bloodchain.data.appointment.TransfusionCenterAppointmentData;
 import utcluj.stiinte.bloodchain.exception.AppException;
 import utcluj.stiinte.bloodchain.model.Appointment;
 import utcluj.stiinte.bloodchain.model.Donor;
@@ -40,18 +41,33 @@ public class AppointmentService {
         appointmentRepository.save(appointment);
     }
     
+    public void completeAppointment(long appointmentId) {
+        Appointment appointment = getAppointment(appointmentId);
+        appointment.setStatus(AppointmentStatus.COMPLETED);
+        appointment.getDonor().setLastDonationDate(appointment.getTime().toLocalDate());
+        appointmentRepository.save(appointment);
+    }
+    
     public void deleteAppointment(long appointmentId) {
         appointmentRepository.delete(getAppointment(appointmentId));
     }
     
-    public List<Appointment> getAppointments(long transfusionCenterId) {
-        return appointmentRepository.findAllByTransfusionCenterId(transfusionCenterId);
+    public List<TransfusionCenterAppointmentData> getTransfusionCenterAppointments(long transfusionCenterId) {
+        return appointmentRepository.findAllByTransfusionCenterIdAndStatusOrderByTimeDesc(
+                transfusionCenterId, AppointmentStatus.SCHEDULED)
+                .stream()
+                .map(a -> new TransfusionCenterAppointmentData(
+                        a.getId(),
+                        a.getTime(),
+                        a.getDonor().getBloodGroup(),
+                        a.getDonor().getAddress().getPhone()
+                )).toList();
     }
 
-    public List<DonationHistory> getCompletedAppointments(long donorId) {
-        return appointmentRepository.findAllByDonorIdAndStatusOrderByTimeDesc(donorId, AppointmentStatus.COMPLETED)
+    public List<DonorAppointmentData> getDonorAppointmentsByStatus(long donorId, AppointmentStatus status) {
+        return appointmentRepository.findAllByDonorIdAndStatusOrderByTimeDesc(donorId, status)
                 .stream()
-                .map(a -> new DonationHistory(
+                .map(a -> new DonorAppointmentData(
                         a.getId(),
                         a.getTime(),
                         a.getTransfusionCenter().getName() + " - " + a.getTransfusionCenter().getAddress().getCity().getName()

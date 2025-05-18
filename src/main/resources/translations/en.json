@@ -3,6 +3,9 @@
   "appointment_not_found": "No appointment with the given id was found",
   
   "donor_not_found": "No donor with the given id was found",
+  
+  "google_api_credentials_not_found": "No JSON file with the Google API credentials found on the classpath",
+  "google_api_error": "Google API error occurred",
 
   "transfusion_center_not_found": "No transfusion center with the given id was found"
 }

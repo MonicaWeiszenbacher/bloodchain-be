@@ -5,8 +5,9 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 import utcluj.stiinte.bloodchain.data.appointment.AppointmentRequest;
-import utcluj.stiinte.bloodchain.data.appointment.DonationHistory;
-import utcluj.stiinte.bloodchain.model.Appointment;
+import utcluj.stiinte.bloodchain.data.appointment.DonorAppointmentData;
+import utcluj.stiinte.bloodchain.data.appointment.TransfusionCenterAppointmentData;
+import utcluj.stiinte.bloodchain.model.enums.AppointmentStatus;
 import utcluj.stiinte.bloodchain.service.AppointmentService;
 
 import java.util.List;
@@ -32,6 +33,12 @@ public class AppointmentController {
         appointmentService.updateAppointment(id, request);
     }
 
+    @Operation(description = "Marks a blood donation appointment as completed")
+    @PutMapping("/{id}/complete")
+    public void completeAppointment(@PathVariable long id) {
+        appointmentService.completeAppointment(id);
+    }
+
     @Operation(description = "Deletes a blood donation appointment")
     @DeleteMapping("/{id}")
     public void deleteAppointment(@PathVariable long id) {
@@ -39,14 +46,20 @@ public class AppointmentController {
     }
    
     @Operation(description = "Returns the appointments in a transfusion center")
-    @GetMapping("/transfusion-centers/{id}")
-    public List<Appointment> getAppointments(@PathVariable long id) {
-        return appointmentService.getAppointments(id);
+    @GetMapping("/scheduled/transfusion-centers/{id}")
+    public List<TransfusionCenterAppointmentData> getAppointments(@PathVariable long id) {
+        return appointmentService.getTransfusionCenterAppointments(id);
+    }
+
+    @Operation(description = "Returns the scheduled donations of a donor")
+    @GetMapping("/scheduled/donors/{id}")
+    public List<DonorAppointmentData> getScheduledDonations(@PathVariable long id) {
+        return appointmentService.getDonorAppointmentsByStatus(id, AppointmentStatus.SCHEDULED);
     }
 
     @Operation(description = "Returns the donation history of a donor, with the most recent as the first")
-    @GetMapping("/donors/{id}")
-    public List<DonationHistory> getDonationHistory(@PathVariable long id) {
-        return appointmentService.getCompletedAppointments(id);
+    @GetMapping("/completed/donors/{id}")
+    public List<DonorAppointmentData> getDonationHistory(@PathVariable long id) {
+        return appointmentService.getDonorAppointmentsByStatus(id, AppointmentStatus.COMPLETED);
     }
 }

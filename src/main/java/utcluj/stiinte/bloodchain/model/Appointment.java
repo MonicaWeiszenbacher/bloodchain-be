@@ -1,7 +1,6 @@
 package utcluj.stiinte.bloodchain.model;
 
 import jakarta.persistence.*;
-import lombok.Builder;
 import lombok.Data;
 import utcluj.stiinte.bloodchain.model.enums.AppointmentStatus;
 
