@@ -52,9 +52,9 @@ public class AppointmentService {
         appointmentRepository.delete(getAppointment(appointmentId));
     }
     
-    public List<TransfusionCenterAppointmentData> getTransfusionCenterAppointments(long transfusionCenterId) {
-        return appointmentRepository.findAllByTransfusionCenterIdAndStatusOrderByTimeDesc(
-                transfusionCenterId, AppointmentStatus.SCHEDULED)
+    public List<TransfusionCenterAppointmentData> getTransfusionCenterAppointments(
+            long transfusionCenterId, AppointmentStatus status) {
+        return appointmentRepository.findAllByTransfusionCenterIdAndStatusOrderByTimeDesc(transfusionCenterId, status)
                 .stream()
                 .map(a -> new TransfusionCenterAppointmentData(
                         a.getId(),

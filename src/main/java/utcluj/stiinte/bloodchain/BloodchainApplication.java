@@ -4,10 +4,10 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class BloodchainApplication {
+public class BloodChainApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(BloodchainApplication.class, args);
+		SpringApplication.run(BloodChainApplication.class, args);
 	}
 
 }

@@ -48,7 +48,13 @@ public class AppointmentController {
     @Operation(description = "Returns the appointments in a transfusion center")
     @GetMapping("/scheduled/transfusion-centers/{id}")
     public List<TransfusionCenterAppointmentData> getAppointments(@PathVariable long id) {
-        return appointmentService.getTransfusionCenterAppointments(id);
+        return appointmentService.getTransfusionCenterAppointments(id, AppointmentStatus.SCHEDULED);
+    }
+
+    @Operation(description = "Returns the donation history of a transfusion center")
+    @GetMapping("/completed/transfusion-centers/{id}")
+    public List<TransfusionCenterAppointmentData> getTransfusionCenterDonationHistory(@PathVariable long id) {
+        return appointmentService.getTransfusionCenterAppointments(id, AppointmentStatus.COMPLETED);
     }
 
     @Operation(description = "Returns the scheduled donations of a donor")
@@ -59,7 +65,7 @@ public class AppointmentController {
 
     @Operation(description = "Returns the donation history of a donor, with the most recent as the first")
     @GetMapping("/completed/donors/{id}")
-    public List<DonorAppointmentData> getDonationHistory(@PathVariable long id) {
+    public List<DonorAppointmentData> getDonorDonationHistory(@PathVariable long id) {
         return appointmentService.getDonorAppointmentsByStatus(id, AppointmentStatus.COMPLETED);
     }
 }
