@@ -9,14 +9,14 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import utcluj.stiinte.bloodchain.data.authentication.AuthenticatedUser;
 import utcluj.stiinte.bloodchain.exception.AppException;
-import utcluj.stiinte.bloodchain.model.User;
+import utcluj.stiinte.bloodchain.model.user.User;
 import utcluj.stiinte.bloodchain.repository.UserRepository;
 
 import java.util.List;
 
 @Service
 @AllArgsConstructor
-public class UserDetailsServiceImpl implements UserDetailsService {
+public class DatabaseUserDetailsService implements UserDetailsService {
     
     private UserRepository userRepository;
 

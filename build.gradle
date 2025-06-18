@@ -3,6 +3,8 @@ plugins {
 	id 'war'
 	id 'org.springframework.boot' version '3.4.4'
 	id 'io.spring.dependency-management' version '1.1.7'
+	id "org.web3j" version "4.14.0"
+	id "org.web3j.solidity" version "0.6.0"
 }
 
 group = 'utcluj.stiinte'
@@ -39,7 +41,6 @@ dependencies {
 	
 	// Database
 	runtimeOnly 'com.h2database:h2'
-	runtimeOnly 'org.postgresql:postgresql'
 	
 	// Google
 	implementation 'com.google.api-client:google-api-client:2.0.0'
@@ -61,3 +62,20 @@ dependencies {
 tasks.named('test') {
 	useJUnitPlatform()
 }
+
+// https://github.com/LFDT-web3j/web3j-gradle-plugin
+web3j {
+	generatedPackageName = "utcluj.stiinte.blockchain.contract"
+	solidity.evmVersion = "london"
+}
+
+// https://github.com/LFDT-web3j/web3j-solidity-gradle-plugin
+sourceSets {
+	main {
+		solidity {
+			output.resourcesDir = file('out/bin/compiledSol')
+		}
+	}
+}
+
+

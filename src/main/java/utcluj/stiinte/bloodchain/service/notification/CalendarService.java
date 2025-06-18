@@ -1,4 +1,4 @@
-package utcluj.stiinte.bloodchain.service;
+package utcluj.stiinte.bloodchain.service.notification;
 
 import com.google.api.client.auth.oauth2.Credential;
 import com.google.api.client.extensions.java6.auth.oauth2.AuthorizationCodeInstalledApp;
@@ -22,14 +22,16 @@ import org.springframework.core.io.ClassPathResource;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import utcluj.stiinte.bloodchain.exception.AppException;
-import utcluj.stiinte.bloodchain.model.Address;
-import utcluj.stiinte.bloodchain.model.PeriodicDonation;
+import utcluj.stiinte.bloodchain.model.donation.PeriodicDonation;
+import utcluj.stiinte.bloodchain.model.location.Address;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.security.GeneralSecurityException;
-import java.time.OffsetDateTime;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Collections;
 import java.util.List;
@@ -47,11 +49,11 @@ public class CalendarService {
     public void createPeriodicEvent(PeriodicDonation periodicDonation) {
         Event event = new Event()
                 .setSummary("Donate blood")
-                .setLocation(formatAddress(periodicDonation.getTransfusionCenter().getAddress()))
+                //.setLocation(formatAddress(periodicDonation.getTransfusionCenter().getAddress()))
                 .setDescription("Periodic reminder from the transfusion center")
-                .setAttendees(List.of(new EventAttendee().setEmail(periodicDonation.getDonor().getAddress().getEmail())))
-                .setStart(getEventDateTime(periodicDonation.getStartDate()))
-                .setEnd(getEventDateTime(periodicDonation.getEndDate()))
+                .setAttendees(List.of(new EventAttendee().setEmail(periodicDonation.getDonor().getEmail())))
+                .setStart(getEventDateTime(periodicDonation.getStartDate(), periodicDonation.getTime()))
+                .setEnd(getEventDateTime(periodicDonation.getEndDate(), periodicDonation.getTime()))
                 .setReminders(new Event.Reminders()
                         .setUseDefault(false)
                         .setOverrides(List.of(new EventReminder().setMethod("email").setMinutes(24 * 60))))
@@ -95,7 +97,7 @@ public class CalendarService {
         return StringUtils.join(",", address.getStreet(), address.getCity().getName(), address.getCity().getCountry());
     }
 
-    private EventDateTime getEventDateTime(OffsetDateTime dateTime) {
-        return new EventDateTime().setDateTime(new DateTime(dateTime.toString())).setTimeZone("Europe/Bucharest");
+    private EventDateTime getEventDateTime(LocalDate date, LocalTime time) {
+        return new EventDateTime().setDateTime(new DateTime(LocalDateTime.of(date, time).toString())).setTimeZone("Europe/Bucharest");
     }
 }

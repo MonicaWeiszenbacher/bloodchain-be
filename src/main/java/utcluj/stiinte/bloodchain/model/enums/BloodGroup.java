@@ -34,4 +34,18 @@ public enum BloodGroup {
     public static boolean canAccept(BloodGroup recipient, BloodGroup donor) {
         return recipient == donor || recipient.otherThanSelfAllowedDonors.contains(donor);
     }
+    
+    public static BloodGroup parse(String bloodGroup) {
+        return switch (bloodGroup) {
+            case "O-" -> BloodGroup.O_NEGATIVE;
+            case "O+" -> BloodGroup.O_POSITIVE;
+            case "A-" -> BloodGroup.A_NEGATIVE;
+            case "A+" -> BloodGroup.A_POSITIVE;
+            case "B-" -> BloodGroup.B_NEGATIVE;
+            case "B+" -> BloodGroup.B_POSITIVE;
+            case "AB-" -> BloodGroup.AB_NEGATIVE;
+            case "AB+" -> BloodGroup.AB_POSITIVE;
+            default -> BloodGroup.O_NEGATIVE;
+        };
+    }
 }

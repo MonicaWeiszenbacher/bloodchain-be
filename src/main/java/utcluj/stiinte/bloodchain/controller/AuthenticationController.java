@@ -15,7 +15,6 @@ import utcluj.stiinte.bloodchain.data.authentication.AuthenticatedUser;
 import utcluj.stiinte.bloodchain.data.authentication.LoginRequest;
 import utcluj.stiinte.bloodchain.data.authentication.LoginResponse;
 import utcluj.stiinte.bloodchain.data.authentication.RegisterRequest;
-import utcluj.stiinte.bloodchain.service.UserService;
 import utcluj.stiinte.bloodchain.service.authentication.JwtService;
 
 @RestController
@@ -25,7 +24,7 @@ public class AuthenticationController {
     
     private JwtService jwtService;
     private AuthenticationManager authenticationManager;
-    private UserService userService;
+    //private UserService userService;
 
     @PostMapping("/login")
     public LoginResponse login(@Valid @RequestBody LoginRequest request) {
@@ -46,6 +45,6 @@ public class AuthenticationController {
 
     @PostMapping("/register")
     public void registerUser(@RequestBody RegisterRequest request) {
-        userService.saveDonor(request);
+       // userService.saveDonor(request);
     }
 }

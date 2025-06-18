@@ -2,7 +2,7 @@ package utcluj.stiinte.bloodchain.repository;
 
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
-import utcluj.stiinte.bloodchain.model.User;
+import utcluj.stiinte.bloodchain.model.user.User;
 
 import java.util.Optional;
 

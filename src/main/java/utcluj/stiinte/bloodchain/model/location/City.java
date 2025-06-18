@@ -1,4 +1,4 @@
-package utcluj.stiinte.bloodchain.model;
+package utcluj.stiinte.bloodchain.model.location;
 
 import jakarta.persistence.*;
 import lombok.Data;

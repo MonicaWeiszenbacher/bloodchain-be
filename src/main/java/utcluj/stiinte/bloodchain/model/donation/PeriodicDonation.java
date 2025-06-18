@@ -1,9 +1,12 @@
-package utcluj.stiinte.bloodchain.model;
+package utcluj.stiinte.bloodchain.model.donation;
 
 import jakarta.persistence.*;
 import lombok.Data;
+import utcluj.stiinte.bloodchain.model.user.Donor;
+import utcluj.stiinte.bloodchain.model.user.TransfusionCenter;
 
-import java.time.OffsetDateTime;
+import java.time.LocalDate;
+import java.time.LocalTime;
 
 @Entity
 @Data
@@ -16,9 +19,11 @@ public class PeriodicDonation {
     
     private String title;
     
-    private OffsetDateTime startDate;
+    private LocalDate startDate;
     
-    private OffsetDateTime endDate;
+    private LocalDate endDate;
+    
+    private LocalTime time;
     
     @OneToOne
     private Donor donor;

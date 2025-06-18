@@ -1,12 +1,14 @@
-package utcluj.stiinte.bloodchain.model;
+package utcluj.stiinte.bloodchain.model.user;
 
 import jakarta.persistence.*;
 import lombok.Data;
 import utcluj.stiinte.bloodchain.model.enums.Role;
+import utcluj.stiinte.bloodchain.model.location.Address;
 
 @Entity
-@Table(name = "users")
+@Table(name = "app_user")
 @Data
+@Inheritance(strategy = InheritanceType.JOINED)
 public class User {
     
     @Id
@@ -14,15 +16,18 @@ public class User {
     @SequenceGenerator(name = "user_seq", sequenceName = "user_sequence", allocationSize = 1)
     private long id;
 
-    @Column(unique = true, nullable = false)
+    @Column(unique = true)
     private String email;
 
-    @Column(nullable = false)
+    @Column
     private String password;
 
-    @Column(unique = true, nullable = false)
+    @Column
     private String blockchainAddress;
 
     @Enumerated(EnumType.STRING)
     private Role role;
+
+    @Embedded
+    private Address address;
 }

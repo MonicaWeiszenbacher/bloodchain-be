@@ -1,16 +1,16 @@
-package utcluj.stiinte.bloodchain.service;
+package utcluj.stiinte.bloodchain.service.notification;
 
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import utcluj.stiinte.bloodchain.model.PeriodicDonation;
+import utcluj.stiinte.bloodchain.model.donation.PeriodicDonation;
 import utcluj.stiinte.bloodchain.repository.PeriodicDonationRepository;
 
 import java.util.List;
 
 @Service
 @AllArgsConstructor
-public class PeriodicDonationService {
+public class DonationNotificationService {
     
     private final PeriodicDonationRepository periodicDonationRepository;
     private final CalendarService calendarService;
