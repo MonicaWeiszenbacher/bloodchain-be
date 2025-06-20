@@ -4,10 +4,11 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
-import utcluj.stiinte.bloodchain.data.appointment.AppointmentRequest;
-import utcluj.stiinte.bloodchain.data.appointment.TransfusionCenterAppointmentData;
-import utcluj.stiinte.bloodchain.model.enums.DonationStatus;
-import utcluj.stiinte.bloodchain.data.TransfusionCenterData;
+import utcluj.stiinte.bloodchain.data.transfusioncenter.AppointmentRequest;
+import utcluj.stiinte.bloodchain.data.transfusioncenter.BloodRequestData;
+import utcluj.stiinte.bloodchain.data.transfusioncenter.DonorData;
+import utcluj.stiinte.bloodchain.data.transfusioncenter.TransfusionCenterDonation;
+import utcluj.stiinte.bloodchain.model.enums.BloodRequestStatus;
 import utcluj.stiinte.bloodchain.service.TransfusionCenterService;
 
 import java.util.List;
@@ -19,46 +20,39 @@ import java.util.List;
 public class TransfusionCenterController {
     
     private final TransfusionCenterService transfusionCenterService;
-    
-    @GetMapping
-    List<TransfusionCenterData> getTransfusionCenterAppointments() {
-        return transfusionCenterService.getTransfusionCenters(1);
+
+    @Operation(description = "Returns the donation history of a transfusion center")
+    @GetMapping("/{id}/donations")
+    public List<TransfusionCenterDonation> getDonationHistory(@PathVariable long id) {
+        return transfusionCenterService.getDonations(id);
+    }
+
+    @Operation(description = "Returns the details of donors who have donations at this transfusion center")
+    @GetMapping("/{id}/blood-requests")
+    public List<BloodRequestData> getBloodRequests(@PathVariable long id) {
+        return transfusionCenterService.getBloodRequests(id);
+    }
+
+    @PatchMapping("{id}/blood-requests/{bloodRequestId}")
+    public void updateBloodRequest(@PathVariable long id, @PathVariable long bloodRequestId,
+                                   @RequestBody BloodRequestStatus newStatus) {
+        transfusionCenterService.updateBloodRequest(bloodRequestId, newStatus);
     }
 
     @Operation(description = "Creates a blood donation appointment")
-    @PostMapping
-    public void saveAppointment(@RequestBody AppointmentRequest request) {
-       transfusionCenterService.saveAppointment(request);
+    @PostMapping("/{id}/appointment")
+    public void saveAppointment(@PathVariable long id, @RequestBody AppointmentRequest request) {
+        transfusionCenterService.saveAppointment(id, request);
     }
 
-    @Operation(description = "Updates a blood donation appointment")
-    @PutMapping("/{id}")
-    public void updateAppointment(@PathVariable long id,
-                                  @RequestBody AppointmentRequest request) {
-        transfusionCenterService.updateAppointment(id, request);
+    @Operation(description = "Returns the details of donors who have donations at this transfusion center")
+    @GetMapping("/{id}/donors")
+    public List<DonorData> getDonors(@PathVariable long id) {
+        return transfusionCenterService.getDonors(id);
     }
-
-    @Operation(description = "Deletes a blood donation appointment")
-    @DeleteMapping("/{id}")
-    public void deleteAppointment(@PathVariable long id) {
-        transfusionCenterService.deleteAppointment(id);
-    }
-   
-    @Operation(description = "Returns the appointments in a transfusion center")
-    @GetMapping("/scheduled/transfusion-centers/{id}")
-    public List<TransfusionCenterAppointmentData> getAppointments(@PathVariable long id) {
-        return transfusionCenterService.getTransfusionCenterAppointments(id, DonationStatus.SCHEDULED);
-    }
-
-    @Operation(description = "Returns the donation history of a transfusion center")
-    @GetMapping("/completed/transfusion-centers/{id}")
-    public List<TransfusionCenterAppointmentData> getTransfusionCenterDonationHistory(@PathVariable long id) {
-        return transfusionCenterService.getTransfusionCenterAppointments(id, DonationStatus.COMPLETED);
-    }
-
-    @Operation(description = "Marks a blood donation as completed")
-    @PutMapping("/{id}/complete")
-    public void completeDonation(@PathVariable long id) {
-        //donationService.completeDonation(id);
+    
+    @PatchMapping("/{donationId}/complete")
+    public void sendTokenToDonor(@PathVariable long donationId) {
+        transfusionCenterService.sendTokenToDonor(donationId);
     }
 }

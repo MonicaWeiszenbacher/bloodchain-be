@@ -5,11 +5,10 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-import utcluj.stiinte.bloodchain.data.appointment.DonorDonation;
-import utcluj.stiinte.bloodchain.data.donor.BloodRequestData;
-import utcluj.stiinte.bloodchain.data.donor.DonorDetailsResponse;
+import utcluj.stiinte.bloodchain.data.donor.*;
+import utcluj.stiinte.bloodchain.data.transfusioncenter.TransfusionCenterData;
 import utcluj.stiinte.bloodchain.service.DonorService;
-import utcluj.stiinte.bloodchain.service.StorageService;
+import utcluj.stiinte.bloodchain.service.TransfusionCenterService;
 
 import java.util.List;
 
@@ -20,7 +19,7 @@ import java.util.List;
 public class DonorController {
     
     private final DonorService donorService;
-    private final StorageService storageService;
+    private final TransfusionCenterService transfusionCenterService;
     
     @GetMapping("/{id}")
     public DonorDetailsResponse getUserDetails(@PathVariable("id") long id) {
@@ -41,5 +40,22 @@ public class DonorController {
     @PostMapping("/{id}/request-blood")
     public void requestBlood(@PathVariable long id, @RequestBody BloodRequestData request) {
         donorService.requestBlood(id, request);
+    }
+
+    @GetMapping("/{id}/closest-transfusion-centers")
+    public List<TransfusionCenterData> getTransfusionCenters(@PathVariable long id) {
+        return transfusionCenterService.getTransfusionCenters(id);
+    }
+
+    @Operation(description = "Creates a blood donation appointment")
+    @PostMapping("/{id}/appointment")
+    public void saveAppointment(@PathVariable long id, @RequestBody AppointmentRequest request) {
+        donorService.saveAppointment(id, request);
+    }
+
+    @Operation(description = "Creates a periodic donation reminder")
+    @PostMapping("/{id}/remind-and-reserve")
+    public void savePeriodicDonation(@PathVariable long id, @RequestBody PeriodicDonationRequest request) {
+        donorService.savePeriodicDonation(id, request);
     }
 }

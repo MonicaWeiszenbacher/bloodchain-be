@@ -3,7 +3,6 @@ package utcluj.stiinte.bloodchain.model.donation;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.*;
 import lombok.Data;
-import utcluj.stiinte.bloodchain.model.enums.BloodBagStatus;
 import utcluj.stiinte.bloodchain.model.enums.DonationStatus;
 import utcluj.stiinte.bloodchain.model.user.Donor;
 import utcluj.stiinte.bloodchain.model.user.TransfusionCenter;
@@ -33,7 +32,7 @@ public class Donation {
     private DonationStatus status = DonationStatus.SCHEDULED;
     
     @Schema(description = "Represents the volume of blood collected, measured in millilitres")
-    private Integer volume = 0;
+    private Integer units = 0;
     
     private String token;
 }

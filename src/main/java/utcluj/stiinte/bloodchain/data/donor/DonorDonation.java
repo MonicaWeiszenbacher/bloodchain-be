@@ -1,4 +1,4 @@
-package utcluj.stiinte.bloodchain.data.appointment;
+package utcluj.stiinte.bloodchain.data.donor;
 
 import java.time.LocalDateTime;
 

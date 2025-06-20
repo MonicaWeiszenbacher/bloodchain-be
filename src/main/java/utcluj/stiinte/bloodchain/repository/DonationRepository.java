@@ -12,6 +12,8 @@ import java.util.Optional;
 public interface DonationRepository extends CrudRepository<Donation, Long> {
     
     List<Donation> findAllByTransfusionCenterIdAndStatusOrderByTimeDesc(long id, DonationStatus status);
+
+    List<Donation> findAllByTransfusionCenterId(long id);
     
     List<Donation> findAllByDonorIdAndStatusOrderByTimeDesc(long id, DonationStatus status);
     

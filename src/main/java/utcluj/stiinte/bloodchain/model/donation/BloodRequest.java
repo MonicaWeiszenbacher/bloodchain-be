@@ -5,6 +5,7 @@ import lombok.Data;
 import utcluj.stiinte.bloodchain.model.enums.BloodGroup;
 import utcluj.stiinte.bloodchain.model.enums.BloodRequestStatus;
 import utcluj.stiinte.bloodchain.model.user.Donor;
+import utcluj.stiinte.bloodchain.model.user.TransfusionCenter;
 
 import java.time.LocalDate;
 
@@ -20,6 +21,10 @@ public class BloodRequest {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     private Donor requester;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "transfusion_center_id")
+    private TransfusionCenter transfusionCenter;
     
     @Enumerated(EnumType.STRING)
     private BloodGroup bloodGroup;

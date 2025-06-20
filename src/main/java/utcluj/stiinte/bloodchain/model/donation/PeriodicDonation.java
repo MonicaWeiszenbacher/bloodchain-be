@@ -5,8 +5,7 @@ import lombok.Data;
 import utcluj.stiinte.bloodchain.model.user.Donor;
 import utcluj.stiinte.bloodchain.model.user.TransfusionCenter;
 
-import java.time.LocalDate;
-import java.time.LocalTime;
+import java.time.LocalDateTime;
 
 @Entity
 @Data
@@ -18,12 +17,10 @@ public class PeriodicDonation {
     private long id;
     
     private String title;
-    
-    private LocalDate startDate;
-    
-    private LocalDate endDate;
-    
-    private LocalTime time;
+
+    private LocalDateTime startDate;
+
+    private LocalDateTime endDate;
     
     @OneToOne
     private Donor donor;

@@ -16,7 +16,7 @@ public class User {
     @SequenceGenerator(name = "user_seq", sequenceName = "user_sequence", allocationSize = 1)
     private long id;
 
-    @Column(unique = true)
+    @Column
     private String email;
 
     @Column

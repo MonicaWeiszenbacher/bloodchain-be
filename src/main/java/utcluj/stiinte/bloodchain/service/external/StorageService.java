@@ -1,4 +1,4 @@
-package utcluj.stiinte.bloodchain.service;
+package utcluj.stiinte.bloodchain.service.external;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.Resource;
